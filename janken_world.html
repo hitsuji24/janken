@@ -4,10 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <script src="js/jquery-2.1.3.min.js"></script>
     <script src="./js/main.js"></script>
-    <link rel="stylesheet" href="css/sample.css">
-    <title>じゃんけん</title>
+    <link rel="stylesheet" href="css/style.css">
+    <title>世界のじゃんけん</title>
 </head>
 
 <body>
@@ -17,27 +16,83 @@
     </header>
 
     <main>
-        <div class="handChoice">
-            <img src="/img/rock.png" alt="" onclick="janken(0)">
-            <img src="/img/scissors.png" alt="" onclick="janken(1)">
-            <img src="/img/paper.png" alt="" onclick="janken(2)">
+        <div class="countryChoiceArea">
+            <div class="multiplier">
+
+            </div>
+            <div class="country">
+                <img src="/img/flag_japan.png" alt="">
+                <img src="/img/flag_france.png" alt="">
+                <img src="/img/flag_usa.png" alt="">
+                <img src="/img/flag_brazil.png" alt="">
+                <img src="/img/flag_china.png" alt="">
+                <img src="/img/flag_indonesia.png" alt="">
+                <img src="/img/flag_australia.png" alt="">
+
+            </div>
         </div>
-        <div class="handResult">
-            <div class="handSelected">
-                <img src="" alt="" id="userImg">
-                <img src="" alt="" id="pcImg">
-                <div class="hantei">
-                    <p id="result"></p>
+
+        <div class="statusArea">
+            <div class="currentMoney">
+                <p>あなたの現在の所持金</p>
+            </div>
+            <div class="scoreHistory">
+                <table>
+                    <tr>
+                        <th>回数</th>
+                        <th>国</th>
+                        <th>勝敗</th>
+                        <th>所持金</th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
+        <div class="playArea">
+            <div class="handChoice">
+            </div>
+            <div class="handResult">
+                <div class="handSelected">
+                    <img src="" alt="" id="userImg">
+                    <img src="" alt="" id="pcImg">
+                    <div class="hantei">
+                        <p id="result"></p>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- <ul> サンプル
-    <li id="gu_btn">グー</li>
-    <li id="cho_btn">チョキ</li>
-    <li id="par_btn">パー</li>
-  </ul>
-  <div>コンピュータの出した手は？「<span id="pc_hands">なに？</span>」</div>
-  <div id="judgment">勝ち</div> -->
+
     </main>
 
     <footer></footer>
