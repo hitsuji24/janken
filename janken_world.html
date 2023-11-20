@@ -16,82 +16,59 @@
     </header>
 
     <main>
-        <div class="countryChoiceArea">
-            <div class="multiplier">
-
-            </div>
+        <p>memo:ここにリセットボタンを置く</p>
+        <section class="information">
+            <!-- 倍率や為替レートの情報を記載 -->
+        </section>
+        <section class="countryChoiceArea">
+            <h2>国を選択してください</h2>
             <div class="country">
-                <img src="/img/flag_japan.png" alt="">
-                <img src="/img/flag_france.png" alt="">
-                <img src="/img/flag_usa.png" alt="">
-                <img src="/img/flag_brazil.png" alt="">
-                <img src="/img/flag_china.png" alt="">
-                <img src="/img/flag_indonesia.png" alt="">
-                <img src="/img/flag_australia.png" alt="">
+                <img src="/img/flag_japan.png" alt="japan" class="countryFlag">
+                <img src="/img/flag_usa.png" alt="usa" class="countryFlag">
+                <img src="/img/flag_brazil.png" alt="brazil" class="countryFlag">
+                <img src="/img/flag_china.png" alt="china" class="countryFlag">
+                <img src="/img/flag_indonesia.png" alt="indonesia" class="countryFlag">
+                <img src="/img/flag_australia.png" alt="australia" class="countryFlag">
 
             </div>
-        </div>
+        </section>
 
-        <div class="statusArea">
+        <section class="statusArea">
             <div class="currentMoney">
-                <p>あなたの現在の所持金</p>
+                <p>あなたの現在の所持金: <span id="moneyDisplay">10000</span>円</p>
             </div>
             <div class="scoreHistory">
-                <table>
-                    <tr>
-                        <th>回数</th>
-                        <th>国</th>
-                        <th>勝敗</th>
-                        <th>所持金</th>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                <h2>ゲーム履歴</h2>
+
+                <table id="scoreTable">
+                    <thead>
+                        <tr>
+                            <th>回数</th>
+                            <th>国</th>
+                            <th>勝敗</th>
+                            <th>所持金</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- ここにJavaScriptで履歴が追加される -->
+                    </tbody>
                 </table>
             </div>
-        </div>
+        </section>
 
 
-        <div class="playArea">
+        <section class="playArea">
+            <h2>じゃんけんの手を選択</h2>
             <div class="handChoice">
+                <!-- JavaScriptでじゃんけんの手の画像がここに追加される -->
             </div>
             <div class="handResult">
-                <div class="handSelected">
-                    <img src="" alt="" id="userImg">
-                    <img src="" alt="" id="pcImg">
-                    <div class="hantei">
-                        <p id="result"></p>
-                    </div>
-                </div>
+                <!-- じゃんけんの結果表示エリア -->
+                <p>あなたの選んだ手: <img src="" alt="" id="userHandImg"></p>
+                <p>PCの選んだ手: <img src="" alt="" id="pcHandImg"></p>
+                <p id="gameResult">勝敗結果がここに表示されます</p>
             </div>
-        </div>
+        </section>
 
     </main>
 
