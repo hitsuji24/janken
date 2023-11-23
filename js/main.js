@@ -4,6 +4,9 @@ document.addEventListener('DOMContentLoaded', function () {
     let playerMoney = 10000; // プレイヤーの初期所持金
     let roundCount = 0; // 現在のラウンド数    
 
+    const resetButton = document.getElementById('resetButton');
+    resetButton.addEventListener('click', resetGame);
+
     // countryオブジェクトに各国のじゃんけんの手と倍率を定義 
     const country = {
         JPN: {
@@ -80,79 +83,105 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // じゃんけんの手を表示：選択された国のじゃんけんの手がボタンとして表示され、プレイヤーはこれをクリックして手を選ぶ
     function displayHands(country) {
-            const handChoiceArea = document.querySelector('.handChoice');
-            handChoiceArea.innerHTML = ''; // 以前の手をクリア
+        const handChoiceArea = document.querySelector('.handChoice');
+        handChoiceArea.innerHTML = ''; // 以前の手をクリア
 
-            country.hands.forEach(hand => {
-                const handButton = document.createElement('button');
-                const handImage = document.createElement('img');
-                handImage.src = hand.image;
-                handButton.appendChild(handImage);
-                handButton.addEventListener('click', () => playRound(hand.name, country));
-                handChoiceArea.appendChild(handButton);
-            });
-        }
+        country.hands.forEach(hand => {
+            const handButton = document.createElement('button');
+            const handImage = document.createElement('img');
+            handImage.src = hand.image;
+            handButton.appendChild(handImage);
+            handButton.addEventListener('click', () => playRound(hand.name, country));
+            handChoiceArea.appendChild(handButton);
+        });
+    }
 
     // ラウンドをプレイ：プレイヤーが手を選択すると、PCとの勝負が行われ、勝敗に応じて所持金が更新
     function playRound(playerHand, country) {
-            const pcHand = country.hands[Math.floor(Math.random() * country.hands.length)].name;
-            const result = determineWinner(playerHand, pcHand);
-            updateMoney(result, country); // 所持金の更新
-            updateScoreboard(roundCount + 1, country.alt, result); // スコアボードの更新
+        const pcHand = country.hands[Math.floor(Math.random() * country.hands.length)].name;
+        const result = determineWinner(playerHand, pcHand);
+        updateMoney(result, country); // 所持金の更新
+        updateScoreboard(roundCount + 1, country.alt, result); // スコアボードの更新
 
-            roundCount++; // ラウンドカウントのインクリメント
+        roundCount++; // ラウンドカウントのインクリメント
 
-            // 【疑問】このメッセージをスコアボードの更新後に出すには？playGroundの定義に出してもだめだった
-            // 【あとで】終わった時点でボタン押せなくしたい。
-            if (roundCount == 4) {
-                alert('次で最後の勝負！！');
-            }
-            if (roundCount >= 5) {
-                alert('このゲームは終了しました。また遊んでね！');
-                return; // 関数から抜ける
-            }
+        // 【疑問】このメッセージをスコアボードの更新後に出すには？playGroundの定義に出してもだめだった
+        // 【あとで】終わった時点でボタン押せなくしたい。
+        if (roundCount == 4) {
+            alert('次で最後の勝負！！');
+        }
+        if (roundCount >= 5) {
+            alert('このゲームは終了しました。また遊んでね！');
+            resetButton.style.display = 'block'; // リセットボタンを表示
+            return; // 関数から抜ける
+        }
 
-            // 勝敗判定：determineWinner 関数でプレイヤーとPCの手を比較し、勝敗を決定
-            function determineWinner(playerHand, pcHand) {
-                if (playerHand === pcHand) {
-                    return 'draw'; // 引き分け
-                }
-
-                const winsAgainst = {
-                    rock: ['scissors'], // 石はハサミに勝つ
-                    paper: ['rock', 'well'], // 紙は石と井戸に勝つ
-                    scissors: ['paper'], // ハサミは紙に勝つ
-                    well: ['rock', 'scissors'] // 井戸は石とハサミに勝つ
-                };
-
-                if (winsAgainst[playerHand].includes(pcHand)) {
-                    return 'win'; // プレイヤーの勝利
-                } else {
-                    return 'lose'; // プレイヤーの敗北
-                }
+        // 勝敗判定：determineWinner 関数でプレイヤーとPCの手を比較し、勝敗を決定
+        function determineWinner(playerHand, pcHand) {
+            if (playerHand === pcHand) {
+                return 'draw'; // 引き分け
             }
 
-            // 所持金の更新：勝敗に応じてプレイヤーの所持金が更新
-            function updateMoney(result, country) {
-                if (result === 'win') {
-                    playerMoney *= country.winMultiplier;
-                } else if (result === 'lose') {
-                    playerMoney /= country.lossMultiplier;
-                }
-                // 'draw'の場合は所持金に変更なし
-                document.querySelector('.currentMoney p').textContent = `あなたの現在の所持金: ${playerMoney}円`;
-            }
+            const winsAgainst = {
+                rock: ['scissors'], // 石はハサミに勝つ
+                paper: ['rock', 'well'], // 紙は石と井戸に勝つ
+                scissors: ['paper'], // ハサミは紙に勝つ
+                well: ['rock', 'scissors'] // 井戸は石とハサミに勝つ
+            };
 
-            // スコアボードの更新：各ラウンドの結果が scoreHistory に記録
-            function updateScoreboard(round, countryName, result) {
-                const scoreboard = document.querySelector('.scoreHistory table');
-                const row = scoreboard.insertRow(-1);
-                row.insertCell(0).textContent = round;
-                row.insertCell(1).textContent = countryName;
-                row.insertCell(2).textContent = result;
-                row.insertCell(3).textContent = playerMoney;
+            if (winsAgainst[playerHand].includes(pcHand)) {
+                return 'win'; // プレイヤーの勝利
+            } else {
+                return 'lose'; // プレイヤーの敗北
             }
         }
+
+        // 所持金の更新：勝敗に応じてプレイヤーの所持金が更新
+        function updateMoney(result, country) {
+            if (result === 'win') {
+                playerMoney *= country.winMultiplier;
+            } else if (result === 'lose') {
+                playerMoney /= country.lossMultiplier;
+            }
+            // 'draw'の場合は所持金に変更なし
+            document.querySelector('.currentMoney p').textContent = `あなたの現在の所持金: ${playerMoney}円`;
+        }
+
+        // スコアボードの更新：各ラウンドの結果が scoreHistory に記録
+        function updateScoreboard(round, countryName, result) {
+            const scoreboard = document.querySelector('.scoreHistory table');
+            const row = scoreboard.insertRow(-1);
+            row.insertCell(0).textContent = round;
+            row.insertCell(1).textContent = countryName;
+            // 【疑問】国名表示されない
+            row.insertCell(2).textContent = result;
+            row.insertCell(3).textContent = playerMoney;
+        }
+    }
+
+    // ゲームをリセットする関数【疑問あり】
+    function resetGame() {
+        // playerMoney = 10000; // 初期所持金に戻す
+        // roundCount = 0; // ラウンド数をリセット
+        // currentPlayerCountry = 'JPN'; // 初期国に戻す
+
+        // スコアボードの中身をリセット
+        // const scoreboard = document.querySelector('.scoreHistory table');
+        // const tbody = scoreboard.getElementsByTagName('tbody')[0]; //スコアボードを構成するテーブルのtbody要素を取得
+        // tbody.innerHTML = ''; //tbodyのinnerHTMLを空に設定することで行をクリア（するはず）回数はリセットされてる
+        // ↓別のスコアボードリセットのやりかた
+        // const scoreboardBody = document.querySelector('.scoreHistory tbody'); //クラス名が scoreHistory の要素内の最初の tbody を選択
+        // if (scoreboardBody) {
+        //     scoreboardBody.innerHTML = '';
+        // }
+        // スコアボードリセットはうまくいかなかったのでページリロードにする
+
+        const resetButton = document.getElementById('resetButton');
+        resetButton.addEventListener('click', function() {
+            location.reload(); // ページをリロードする。はずだが？
+        });
+        resetButton.style.display = 'none'; // リセットボタンを非表示にする
+    }
 }
 );
 
