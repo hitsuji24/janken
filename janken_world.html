@@ -12,32 +12,17 @@
 <body>
 
     <header>
-        <h1>じゃんけん</h1>
+        <h1>世界のじゃんけん</h1>
     </header>
 
     <main>
-        <!-- リセットボタン、初期状態では非表示 -->
-        <button id="resetButton" style="display:none;">ゲームをリセット</button>
-        <section class="countryChoiceArea">
-            <h2>国を選択してください</h2>
-            <div class="country">
-                <img src="/img/flag_japan.png" alt="JPN" class="countryFlag">
-                <img src="/img/flag_usa.png" alt="USA" class="countryFlag">
-                <img src="/img/flag_brazil.png" alt="BRA" class="countryFlag">
-                <img src="/img/flag_china.png" alt="CHN" class="countryFlag">
-                <img src="/img/flag_indonesia.png" alt="IDN" class="countryFlag">
-                <img src="/img/flag_australia.png" alt="AUS" class="countryFlag">
 
-            </div>
-        </section>
-
-        <section class="statusArea">
-            <div class="currentMoney">
-                <p>あなたの現在の所持金: <span id="moneyDisplay">10000</span>円</p>
-            </div>
+        <section class="statusColumn">
             <div class="scoreHistory">
                 <h2>ゲーム履歴</h2>
-
+                <div class="currentMoney">
+                    <p>あなたの現在の所持金: <span id="moneyDisplay">10000</span>円</p>
+                </div>
                 <table id="scoreTable">
                     <thead>
                         <tr>
@@ -54,20 +39,36 @@
             </div>
         </section>
 
-
-        <section class="playArea">
-            <h2>じゃんけんの手を選択</h2>
-            <div class="handChoice">
-                <!-- JavaScriptでじゃんけんの手の画像がここに追加される -->
-            </div>
-            <div class="handResult">
-                <!-- じゃんけんの結果表示エリア -->
-                <p>あなたの選んだ手: <img src="" alt="" id="userHandImg"></p>
-                <p>PCの選んだ手: <img src="" alt="" id="pcHandImg"></p>
-                <p id="gameResult">勝敗結果がここに表示されます</p>
-            </div>
+        <section class="mainColumn">
+            <!-- リセットボタン、初期状態では非表示 -->
+            <button id="resetButton" style="display:none;">ゲームをリセット</button>
+            <section class="countryChoiceArea">
+                <h2>国を選択してください</h2>
+                <div class="country">
+                    <img src="/img/flag_japan.png" alt="JPN" class="countryFlag">
+                    <img src="/img/flag_usa.png" alt="USA" class="countryFlag">
+                    <img src="/img/flag_brazil.png" alt="BRA" class="countryFlag">
+                    <img src="/img/flag_china.png" alt="CHN" class="countryFlag">
+                    <img src="/img/flag_indonesia.png" alt="IDN" class="countryFlag">
+                    <img src="/img/flag_australia.png" alt="AUS" class="countryFlag">
+                </div>
+            </section>
+            <section class="playArea">
+                <h2>じゃんけんの手を選択</h2>
+                <div class="handChoice">
+                    <!-- JavaScriptでじゃんけんの手の画像を表示 -->
+                </div>
+                <h2>勝負の行方</h2>
+                <div class="handResult">
+                    <!-- JavaScriptでじゃんけんの結果を表示 -->
+                </div>
+            </section>
         </section>
 
+        <section class="informationColumn">
+            <h2>Information</h2>
+
+        </section>
     </main>
 
     <footer></footer>

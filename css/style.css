@@ -1,0 +1,48 @@
+body {
+    margin: 0 5%;
+    padding: 0;
+}
+
+h2 {
+    font-size: 24px;
+    padding: 0;
+    margin: 8px 0;
+}
+
+main {
+    display: flex;
+}
+
+.country {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.country img {
+    height: 140px;
+}
+
+.statusColumn,
+.informationColumn {
+    flex: 0 0 300px;
+}
+
+.mainColumn {
+    flex: 1;
+}
+
+.handChoice {
+    height: 280px;
+    background-color: aquamarine;
+}
+
+.handResult {
+    height: 280px;
+    background-color: aquamarine;
+}
+.handResult img{
+    height:240px;
+}

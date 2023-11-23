@@ -71,6 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     };
 
+    
     // 国の選択：国旗をクリックしてその国のじゃんけんの手を表示
     const countryImages = document.querySelectorAll('.country img');
     countryImages.forEach(img => {
@@ -86,13 +87,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const handChoiceArea = document.querySelector('.handChoice');
         handChoiceArea.innerHTML = ''; // 以前の手をクリア
 
-        country.hands.forEach(hand => {
-            const handButton = document.createElement('button');
-            const handImage = document.createElement('img');
-            handImage.src = hand.image;
-            handButton.appendChild(handImage);
-            handButton.addEventListener('click', () => playRound(hand.name, country));
-            handChoiceArea.appendChild(handButton);
+        country.hands.forEach(hand => { //country オブジェクトの hands 配列をループ処理 forEach メソッドは配列の各要素に対して与えられた関数（この場合はアロー関数 hand => {...}）を実行 各要素は hand として参照される
+            const handButton = document.createElement('button'); //新しい button 要素を作成し、それを handButton という変数に格納
+            const handImage = document.createElement('img'); //新しい img 要素を作成し、それを handImage という変数に格納
+            handImage.src = hand.image; //作成した img 要素の src 属性を、hand オブジェクトの image プロパティに設定。これにより画像が表示される。
+            handButton.appendChild(handImage); //作成した img 要素（handImage）を、button 要素（handButton）の子要素として追加→ボタンの中に画像が表示される
+            handButton.addEventListener('click', () => playRound(hand.name, country)); //ボタンクリック→playRound 関数呼び出し→hand.nameとcountryを引数
+            handChoiceArea.appendChild(handButton); //handButtonをhandChoiceAreaの子要素として追加→ボタンがページに表示される
         });
     }
 
@@ -100,9 +101,46 @@ document.addEventListener('DOMContentLoaded', function () {
     function playRound(playerHand, country) {
         const pcHand = country.hands[Math.floor(Math.random() * country.hands.length)].name;
         const result = determineWinner(playerHand, pcHand);
+
+
+        // 結果表示エリア
+        const handResultArea = document.querySelector('.handResult');
+        handResultArea.innerHTML = ''; // 既存の内容をクリア
+
+        // ユーザーの手の画像
+        const userHandImg = document.createElement('img');
+        userHandImg.src = getHandImage(playerHand, country);
+        handResultArea.appendChild(userHandImg);
+
+        // 勝敗結果の画像
+        const resultImg = document.createElement('img');
+        resultImg.src = getResultImage(result); // 勝敗結果に応じた画像を取得
+        handResultArea.appendChild(resultImg);
+
+        // PCの手の画像
+        const pcHandImg = document.createElement('img');
+        pcHandImg.src = getHandImage(pcHand, country);
+        handResultArea.appendChild(pcHandImg);
+
         updateMoney(result, country); // 所持金の更新
         updateScoreboard(roundCount + 1, country.alt, result); // スコアボードの更新
-
+        // 手の画像を取得する関数
+        function getHandImage(handName, country) {
+            const hand = country.hands.find(h => h.name === handName);
+            return hand ? hand.image : '';
+        }
+        
+        function getResultImage(result) {
+            // 勝敗結果に応じた画像のパスを設定する
+            const resultImages = {
+                win: '/img/win.png',   // 勝ちの画像のパス
+                lose: '/img/lose.png', // 負けの画像のパス
+                draw: '/img/draw.png'  // 引き分けの画像のパス
+            };
+        
+            // resultImages オブジェクトから対応する画像のパスを返す
+            return resultImages[result] || 'path/to/default-result-image.png';
+        }
         roundCount++; // ラウンドカウントのインクリメント
 
         // 【疑問】このメッセージをスコアボードの更新後に出すには？playGroundの定義に出してもだめだった
@@ -159,7 +197,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // ゲームをリセットする関数【疑問あり】
+    // ゲームをリセットする関数【疑問あり】2回押すと意図通りにリセットできる
     function resetGame() {
         // playerMoney = 10000; // 初期所持金に戻す
         // roundCount = 0; // ラウンド数をリセット
@@ -174,10 +212,9 @@ document.addEventListener('DOMContentLoaded', function () {
         // if (scoreboardBody) {
         //     scoreboardBody.innerHTML = '';
         // }
-        // スコアボードリセットはうまくいかなかったのでページリロードにする
-
+        // スコアボードリセットはうまくいかなかったのでページリロードにする↓
         const resetButton = document.getElementById('resetButton');
-        resetButton.addEventListener('click', function() {
+        resetButton.addEventListener('click', function () {
             location.reload(); // ページをリロードする。はずだが？
         });
         resetButton.style.display = 'none'; // リセットボタンを非表示にする
