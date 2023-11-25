@@ -11,6 +11,8 @@ h2 {
 
 main {
     display: flex;
+    justify-content: center;
+
 }
 
 .country {
@@ -25,6 +27,10 @@ main {
     height: 140px;
 }
 
+.country img.highlight {
+    border: 2px solid gold; /* 選択された国をハイライトするためのスタイル */
+}
+
 .statusColumn,
 .informationColumn {
     flex: 0 0 300px;
@@ -32,11 +38,19 @@ main {
 
 .mainColumn {
     flex: 1;
+    max-width: 1000px;
 }
 
 .handChoice {
     height: 280px;
     background-color: aquamarine;
+    transition: background 0.5s ease; /* 背景色変更時のトランジション */
+}
+
+.handButton {
+    background: transparent;
+    border: none;
+    /* 必要に応じて他のスタイルを追加 */
 }
 
 .handResult {
@@ -46,3 +60,5 @@ main {
 .handResult img{
     height:240px;
 }
+
+

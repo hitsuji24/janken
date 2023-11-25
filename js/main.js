@@ -71,24 +71,48 @@ document.addEventListener('DOMContentLoaded', function () {
 
     };
 
-    
+
     // 国の選択：国旗をクリックしてその国のじゃんけんの手を表示
     const countryImages = document.querySelectorAll('.country img');
     countryImages.forEach(img => {
         img.addEventListener('click', function () {
             const countryName = this.alt // 国名を取得
-            // 【備忘録】国名を大文字のコードにしたので.toLowerCase()が悪さしていた
+            // ↑【備忘録】国名を大文字のコードにしたので.toLowerCase()が悪さしていた
+            highlightCountry(this); //ハイライト
+            changeHandChoiceBackground(countryName); //背景色
             displayHands(country[countryName]);
         });
     });
+
+    // 選択された国をハイライトする関数
+    function highlightCountry(selectedImg) {
+        // すべての国の画像からハイライトを削除
+        document.querySelectorAll('.country img').forEach(img => {
+            img.classList.remove('highlight');
+        });
+        // 選択された国の画像にハイライトを追加
+        selectedImg.classList.add('highlight');
+    }
+
+    // handChoice エリアの背景色を変更する関数
+    function changeHandChoiceBackground(country) {
+        const handChoiceArea = document.querySelector('.handChoice');
+        const bgColors = {
+            JPN: 'linear-gradient(to right, #fff, #f00, #fff)',
+            USA: 'linear-gradient(to right, #00f, #fff, #f00)',
+            // その他の国に対応するグラデーションを追加...
+        };
+        handChoiceArea.style.background = bgColors[country] || 'none';
+    }
 
     // じゃんけんの手を表示：選択された国のじゃんけんの手がボタンとして表示され、プレイヤーはこれをクリックして手を選ぶ
     function displayHands(country) {
         const handChoiceArea = document.querySelector('.handChoice');
         handChoiceArea.innerHTML = ''; // 以前の手をクリア
-
         country.hands.forEach(hand => { //country オブジェクトの hands 配列をループ処理 forEach メソッドは配列の各要素に対して与えられた関数（この場合はアロー関数 hand => {...}）を実行 各要素は hand として参照される
             const handButton = document.createElement('button'); //新しい button 要素を作成し、それを handButton という変数に格納
+            handButton.className = 'handButton'; // 新しいクラスを適用
+
             const handImage = document.createElement('img'); //新しい img 要素を作成し、それを handImage という変数に格納
             handImage.src = hand.image; //作成した img 要素の src 属性を、hand オブジェクトの image プロパティに設定。これにより画像が表示される。
             handButton.appendChild(handImage); //作成した img 要素（handImage）を、button 要素（handButton）の子要素として追加→ボタンの中に画像が表示される
@@ -129,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const hand = country.hands.find(h => h.name === handName);
             return hand ? hand.image : '';
         }
-        
+
         function getResultImage(result) {
             // 勝敗結果に応じた画像のパスを設定する
             const resultImages = {
@@ -137,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 lose: '/img/lose.png', // 負けの画像のパス
                 draw: '/img/draw.png'  // 引き分けの画像のパス
             };
-        
+
             // resultImages オブジェクトから対応する画像のパスを返す
             return resultImages[result] || 'path/to/default-result-image.png';
         }
