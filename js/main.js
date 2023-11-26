@@ -19,26 +19,6 @@ document.addEventListener('DOMContentLoaded', function () {
             lossMultiplier: 1.5 // 敗北時のペナルティ倍率
         },
 
-        USA: {
-            hands: [
-                { name: 'rock', image: '/img/rock.png' },
-                { name: 'scissors', image: '/img/scissors.png' },
-                { name: 'paper', image: '/img/paper.png' }
-            ],
-            winMultiplier: 3, // 勝利時の報酬倍率
-            lossMultiplier: 5 // 敗北時のペナルティ倍率
-        },
-
-        BRA: {
-            hands: [
-                { name: 'rock', image: '/img/rock.png' },
-                { name: 'scissors', image: '/img/scissors.png' },
-                { name: 'paper', image: '/img/paper.png' }
-            ],
-            winMultiplier: 3, // 勝利時の報酬倍率
-            lossMultiplier: 5 // 敗北時のペナルティ倍率
-        },
-
         CHN: {
             hands: [
                 { name: 'rock', image: '/img/rock.png' },
@@ -49,17 +29,50 @@ document.addEventListener('DOMContentLoaded', function () {
             lossMultiplier: 5 // 敗北時のペナルティ倍率
         },
 
+        MYS: {
+            hands: [
+                { name: 'water', image: '/img/water.png' },
+                { name: 'board', image: '/img/board.png' },
+                { name: 'bird', image: '/img/bird.png' },
+                { name: 'gun', image: '/img/gun.png' },
+                { name: 'rock', image: '/img/rock-malaysia.png' }
+            ],
+            winMultiplier: 3, // 勝利時の報酬倍率
+            lossMultiplier: 5 // 敗北時のペナルティ倍率
+        },
+
+        SGP: {
+            hands: [
+                { name: 'water', image: '/img/water.png' },
+                { name: 'rock', image: '/img/rock-singapore.png' },
+                { name: 'dragon', image: '/img/well.png' }
+            ],
+            winMultiplier: 3, // 勝利時の報酬倍率
+            lossMultiplier: 5 // 敗北時のペナルティ倍率
+        },
+
         IDN: {
             hands: [
-                { name: 'rock', image: '/img/rock.png' },
-                { name: 'scissors', image: '/img/scissors.png' },
-                { name: 'paper', image: '/img/paper.png' }
+                { name: 'ant', image: '/img/ant.png' },
+                { name: 'elephant', image: '/img/elephant.png' },
+                { name: 'human', image: '/img/human.png' }
             ],
             winMultiplier: 3, // 勝利時の報酬倍率
             lossMultiplier: 5 // 敗北時のペナルティ倍率
         },
 
-        AUS: {
+        FRA: {
+            hands: [
+                { name: 'rock', image: '/img/rock.png' },
+                { name: 'scissors', image: '/img/scissors.png' },
+                { name: 'paper', image: '/img/paper.png' },
+                { name: 'well', image: '/img/well.png' }
+            ],
+            winMultiplier: 3, // 勝利時の報酬倍率
+            lossMultiplier: 5 // 敗北時のペナルティ倍率
+        },
+
+        USA: {
             hands: [
                 { name: 'rock', image: '/img/rock.png' },
                 { name: 'scissors', image: '/img/scissors.png' },
@@ -68,7 +81,6 @@ document.addEventListener('DOMContentLoaded', function () {
             winMultiplier: 3, // 勝利時の報酬倍率
             lossMultiplier: 5 // 敗北時のペナルティ倍率
         },
-
     };
 
 
@@ -185,10 +197,18 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             const winsAgainst = {
-                rock: ['scissors'], // 石はハサミに勝つ
+                rock: ['scissors','bird','board','dragon'], // 石はハサミに勝つ
                 paper: ['rock', 'well'], // 紙は石と井戸に勝つ
                 scissors: ['paper'], // ハサミは紙に勝つ
-                well: ['rock', 'scissors'] // 井戸は石とハサミに勝つ
+                well: ['rock', 'scissors'], // 井戸は石とハサミに勝つ
+                water: ['gun','rock'],
+                gun: ['bird','board'],
+                board: ['bird','water'],
+                bird: ['water'],
+                dragon: ['water'],
+                ant: ['elephant'],
+                elepahnt: ['human'],
+                human: ['ant']
             };
 
             if (winsAgainst[playerHand].includes(pcHand)) {

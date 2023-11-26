@@ -1,6 +1,7 @@
 body {
     margin: 0 5%;
     padding: 0;
+    background-color: #FFF8D8;
 }
 
 h2 {
@@ -23,23 +24,25 @@ main {
     gap: 20px;
 }
 
+
 .country img {
-    height: 140px;
+    height: 130px;
 }
 
     /* 選択された国をハイライトするためのスタイル */
 .country img.highlight {
-    border: 2px solid gold;
+    border: 2px solid rgb(0, 0, 0);
 }
 
 .statusColumn,
 .informationColumn {
-    flex: 0 0 300px;
+    flex: 0 0 280px;
 }
 
 .mainColumn {
     flex: 1;
     max-width: 1000px;
+    margin: 0 16px;
 }
 
 .handChoice {
