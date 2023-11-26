@@ -44,7 +44,7 @@ main {
 
 .handChoice {
     height: 280px;
-    transition: background 0.5s ease;
+    transition: background 1s ease;
     /* 背景色変更時のトランジション */
     display: flex;
     justify-content: center;

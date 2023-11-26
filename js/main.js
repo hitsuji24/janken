@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // 【疑問】このメッセージをスコアボードの更新後に出すには？playGroundの定義に出してもだめだった
         // 【あとで】終わった時点でボタン押せなくしたい。
         if (roundCount == 4) {
-            alert('次で最後の勝負！！');
+            alert('次で最後の勝負！');
         }
         if (roundCount >= 5) {
             alert('このゲームは終了しました。また遊んでね！');
