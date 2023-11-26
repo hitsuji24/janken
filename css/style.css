@@ -27,8 +27,9 @@ main {
     height: 140px;
 }
 
+    /* 選択された国をハイライトするためのスタイル */
 .country img.highlight {
-    border: 2px solid gold; /* 選択された国をハイライトするためのスタイル */
+    border: 2px solid gold;
 }
 
 .statusColumn,
@@ -43,10 +44,17 @@ main {
 
 .handChoice {
     height: 280px;
-    background-color: aquamarine;
-    transition: background 0.5s ease; /* 背景色変更時のトランジション */
+    transition: background 0.5s ease;
+    /* 背景色変更時のトランジション */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* 垂直方向の中央揃え */
 }
 
+.handChoice img{
+    height: 240px;
+}
 .handButton {
     background: transparent;
     border: none;
@@ -56,9 +64,12 @@ main {
 .handResult {
     height: 280px;
     background-color: aquamarine;
-}
-.handResult img{
-    height:240px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* 垂直方向の中央揃え */
 }
 
-
+.handResult img {
+    height: 240px;
+}
