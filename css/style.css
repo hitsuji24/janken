@@ -59,6 +59,8 @@ main {
 
 .handChoice img{
     height: 200px;
+    transform: scaleX(-1); /* 水平方向に反転 */
+
 }
 .handButton {
     background: transparent;
@@ -104,3 +106,4 @@ main {
 .handResult img {
     height: 240px;
 }
+

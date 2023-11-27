@@ -155,11 +155,16 @@ document.addEventListener('DOMContentLoaded', function () {
         // ユーザーの手の画像
         const userHandImg = document.createElement('img');
         userHandImg.src = getHandImage(playerHand, country);
+        userHandImg.style.transform = 'scaleX(-1)'; // 画像を反転
         handResultArea.appendChild(userHandImg);
 
         // 勝敗結果の画像
         const resultImg = document.createElement('img');
         resultImg.src = getResultImage(result); // 勝敗結果に応じた画像を取得
+        resultImg.style.display = 'none'; // 初期状態では非表示
+        resultImg.onload = function () {
+            $(resultImg).fadeIn(1000); // 画像のロードが完了したらフェードイン
+        };
         handResultArea.appendChild(resultImg);
 
         // PCの手の画像
@@ -167,8 +172,13 @@ document.addEventListener('DOMContentLoaded', function () {
         pcHandImg.src = getHandImage(pcHand, country);
         handResultArea.appendChild(pcHandImg);
 
+        $('#userHand, #pcHand').animate({
+            width: '150px'
+        }, 500); // 手の画像を大きく表示
+
         updateMoney(result, country); // 所持金の更新
         updateScoreboard(roundCount + 1, country.alt, result); // スコアボードの更新
+
         // 手の画像を取得する関数
         function getHandImage(handName, country) {
             const hand = country.hands.find(h => h.name === handName);
@@ -186,6 +196,9 @@ document.addEventListener('DOMContentLoaded', function () {
             // resultImages オブジェクトから対応する画像のパスを返す
             return resultImages[result] || 'path/to/default-result-image.png';
         }
+
+        
+
         roundCount++; // ラウンドカウントのインクリメント
 
         // 【疑問】このメッセージをスコアボードの更新後に出すには？playGroundの定義に出してもだめだった
@@ -250,30 +263,32 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // ゲームをリセットする関数【疑問あり】2回押すと意図通りにリセットできる
-    function resetGame() {
-        // playerMoney = 10000; // 初期所持金に戻す
-        // roundCount = 0; // ラウンド数をリセット
-        // currentPlayerCountry = 'JPN'; // 初期国に戻す
 
-        // スコアボードの中身をリセット
-        // const scoreboard = document.querySelector('.scoreHistory table');
-        // const tbody = scoreboard.getElementsByTagName('tbody')[0]; //スコアボードを構成するテーブルのtbody要素を取得
-        // tbody.innerHTML = ''; //tbodyのinnerHTMLを空に設定することで行をクリア（するはず）回数はリセットされてる
-        // ↓別のスコアボードリセットのやりかた
-        // const scoreboardBody = document.querySelector('.scoreHistory tbody'); //クラス名が scoreHistory の要素内の最初の tbody を選択
-        // if (scoreboardBody) {
-        //     scoreboardBody.innerHTML = '';
-        // }
-        // スコアボードリセットはうまくいかなかったのでページリロードにする↓
-        const resetButton = document.getElementById('resetButton');
-        resetButton.addEventListener('click', function () {
-            location.reload(); // ページをリロードする。はずだが？
-        });
-        resetButton.style.display = 'none'; // リセットボタンを非表示にする
-    }
+
+    
 }
 );
 
+// ゲームをリセットする関数【疑問あり】2回押すと意図通りにリセットできる
+function resetGame() {
+    // playerMoney = 10000; // 初期所持金に戻す
+    // roundCount = 0; // ラウンド数をリセット
+    // currentPlayerCountry = 'JPN'; // 初期国に戻す
 
+    // スコアボードの中身をリセット
+    // const scoreboard = document.querySelector('.scoreHistory table');
+    // const tbody = scoreboard.getElementsByTagName('tbody')[0]; //スコアボードを構成するテーブルのtbody要素を取得
+    // tbody.innerHTML = ''; //tbodyのinnerHTMLを空に設定することで行をクリア（するはず）回数はリセットされてる
+    // ↓別のスコアボードリセットのやりかた
+    // const scoreboardBody = document.querySelector('.scoreHistory tbody'); //クラス名が scoreHistory の要素内の最初の tbody を選択
+    // if (scoreboardBody) {
+    //     scoreboardBody.innerHTML = '';
+    // }
+    // スコアボードリセットはうまくいかなかったのでページリロードにする↓
+    const resetButton = document.getElementById('resetButton');
+    resetButton.addEventListener('click', function () {
+        location.reload(); // ページをリロードする。はずだが？
+    });
+    resetButton.style.display = 'none'; // リセットボタンを非表示にする
+}
 
