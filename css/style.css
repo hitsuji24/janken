@@ -26,7 +26,7 @@ main {
 
 
 .country img {
-    height: 130px;
+    height: 100px;
 }
 
     /* 選択された国をハイライトするためのスタイル */
@@ -46,17 +46,19 @@ main {
 }
 
 .handChoice {
-    height: 280px;
+    height: 240px;
     transition: background 1s ease;
     /* 背景色変更時のトランジション */
     display: flex;
     justify-content: center;
     align-items: center;
     /* 垂直方向の中央揃え */
+        flex-wrap: wrap;
+    gap: 20px;
 }
 
 .handChoice img{
-    height: 240px;
+    height: 200px;
 }
 .handButton {
     background: transparent;

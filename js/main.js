@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const countryName = this.alt // 国名を取得
             // ↑【備忘録】国名を大文字のコードにしたので.toLowerCase()が悪さしていた
             highlightCountry(this); //ハイライト
-            changeHandChoiceBackground(countryName); //背景色
+            // changeHandChoiceBackground(countryName); //背景色
             displayHands(country[countryName]);
         });
     });
@@ -106,16 +106,16 @@ document.addEventListener('DOMContentLoaded', function () {
         selectedImg.classList.add('highlight');
     }
 
-    // handChoice エリアの背景色を変更する関数
-    function changeHandChoiceBackground(country) {
-        const handChoiceArea = document.querySelector('.handChoice');
-        const bgColors = {
-            JPN: 'linear-gradient(to right, #fff, #f00, #fff)',
-            USA: 'linear-gradient(to right, #00f, #fff, #f00)',
-            // その他の国に対応するグラデーションを追加...
-        };
-        handChoiceArea.style.background = bgColors[country] || 'none';
-    }
+    // handChoice エリアの背景色を変更する関数 かわいくないのでやめる
+    // function changeHandChoiceBackground(country) {
+    //     const handChoiceArea = document.querySelector('.handChoice');
+    //     const bgColors = {
+    //         JPN: 'linear-gradient(to right, #fff, #f00, #fff)',
+    //         USA: 'linear-gradient(to right, #00f, #fff, #f00)',
+    //         // その他の国に対応するグラデーションを追加...
+    //     };
+    //     handChoiceArea.style.background = bgColors[country] || 'none';
+    // }
 
     // じゃんけんの手を表示：選択された国のじゃんけんの手がボタンとして表示され、プレイヤーはこれをクリックして手を選ぶ
     function displayHands(country) {
