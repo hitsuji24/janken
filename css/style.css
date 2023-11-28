@@ -24,7 +24,7 @@ h3{
     margin: 4px 0;
     color: rgb(206, 69, 69)
 }
-p{
+.mainColumn p{
     margin: 0 0 8px 0;
 }
 main {
@@ -170,4 +170,13 @@ main {
 
 .handResult img {
     height: 240px;
+}
+
+footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+margin: 20px;
+font-size: 12px;
 }
