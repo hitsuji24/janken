@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
             ],
             winMultiplier: 1.5, // 勝利時の報酬倍率
             lossMultiplier: 1.5 // 敗北時のペナルティ倍率
+            odds:'テスト'
         },
 
         CHN: {
@@ -79,7 +80,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 { name: 'paper', image: '/img/paper.png', description: '紙' }
             ],
             winMultiplier: 3, // 勝利時の報酬倍率
-            lossMultiplier: 5 // 敗北時のペナルティ倍率
+            lossMultiplier: 5 // 敗北時のペナルティ倍率,
+            odds:'アメリカンドリーム！勝ったら'+winMultiplier+'倍,負けたら'+lossMultiplier+'倍'
         },
     };
 
@@ -106,18 +108,25 @@ document.addEventListener('DOMContentLoaded', function () {
         selectedImg.classList.add('highlight');
     }
 
-    // handChoice エリアの背景色を変更する関数 かわいくないのでやめる
+    // 国ごとの倍率をツールチップで表示
+    const tooltipCountry= document.createElement('span'); // ツールチップ用のspan要素を作成
+    tooltipCountry.className = 'tooltipHand';
+    tooltipCountry.textContent = country.odds; // ツールチップのテキストを設定
+    countryImages.appendChild(tooltipCountry); // handButtonにtooltipを追加
+
+
+    // handChoice エリアの背景色を変更する関数 →かわいくないのでやめる
     // function changeHandChoiceBackground(country) {
     //     const handChoiceArea = document.querySelector('.handChoice');
     //     const bgColors = {
+        // 国ごとに特有の色を指定
     //         JPN: 'linear-gradient(to right, #fff, #f00, #fff)',
     //         USA: 'linear-gradient(to right, #00f, #fff, #f00)',
-    //         // その他の国に対応するグラデーションを追加...
     //     };
     //     handChoiceArea.style.background = bgColors[country] || 'none';
     // }
 
-    // じゃんけんの手を表示：選択された国のじゃんけんの手がボタンとして表示され、プレイヤーはこれをクリックして手を選ぶ
+    // じゃんけんの手を表示：選択された国のじゃんけんの手がボタンとして表示
     function displayHands(country) {
         const handChoiceArea = document.querySelector('.handChoice');
         handChoiceArea.innerHTML = ''; // 以前の手をクリア
@@ -131,12 +140,12 @@ document.addEventListener('DOMContentLoaded', function () {
             handImage.className = 'hand'; // img にクラス名を追加
             handImage.src = hand.image; //作成した img 要素の src 属性を、hand オブジェクトの image プロパティに設定。これにより画像が表示される。
 
-            const tooltip = document.createElement('span'); // ツールチップ用のspan要素を作成
-            tooltip.className = 'tooltip';
-            tooltip.textContent = hand.description; // ツールチップのテキストを設定
+            const tooltipHand = document.createElement('span'); // ツールチップ用のspan要素を作成
+            tooltipHand.className = 'tooltipHand';
+            tooltipHand.textContent = hand.description; // ツールチップのテキストを設定
 
             handButton.appendChild(handImage); //作成した img 要素（handImage）を、button 要素（handButton）の子要素として追加→ボタンの中に画像が表示される
-            handButton.appendChild(tooltip); // handButtonにtooltipを追加
+            handButton.appendChild(tooltipHand); // handButtonにtooltipを追加
             handButton.addEventListener('click', () => playRound(hand.name, country)); //ボタンクリック→playRound 関数呼び出し→hand.nameとcountryを引数
             handChoiceArea.appendChild(handButton); //handButtonをhandChoiceAreaの子要素として追加→ボタンがページに表示される
         });
@@ -177,7 +186,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 500); // 手の画像を大きく表示
 
         updateMoney(result, country); // 所持金の更新
-        updateScoreboard(roundCount + 1, country.alt, result); // スコアボードの更新
+
+        // スコアボードの更新
+        //【備忘録】5回までは回す、それ以降はやらないというif文にするといいかも
+        // updateScoreboard(roundCount + 1, country.alt, result); // スコアボードの更新
+        if (roundCount < 5) {
+            updateScoreboard(roundCount + 1, country.alt, result);
+        }
 
         // 手の画像を取得する関数
         function getHandImage(handName, country) {
@@ -197,10 +212,6 @@ document.addEventListener('DOMContentLoaded', function () {
             return resultImages[result] || 'path/to/default-result-image.png';
         }
 
-        
-
-        roundCount++; // ラウンドカウントのインクリメント
-
         // 【疑問】このメッセージをスコアボードの更新後に出すには？playGroundの定義に出してもだめだった
         // 【あとで】終わった時点でボタン押せなくしたい。
         if (roundCount == 4) {
@@ -211,6 +222,10 @@ document.addEventListener('DOMContentLoaded', function () {
             resetButton.style.display = 'block'; // リセットボタンを表示
             return; // 関数から抜ける
         }
+
+
+        roundCount++; // ラウンドカウントのインクリメント
+
 
         // 勝敗判定：determineWinner 関数でプレイヤーとPCの手を比較し、勝敗を決定
         function determineWinner(playerHand, pcHand) {
@@ -262,14 +277,11 @@ document.addEventListener('DOMContentLoaded', function () {
             row.insertCell(3).textContent = playerMoney;
         }
     }
-
-
-
-    
 }
 );
 
-// ゲームをリセットする関数【疑問あり】2回押すと意図通りにリセットできる
+
+// ゲームをリセットする関数
 function resetGame() {
     // playerMoney = 10000; // 初期所持金に戻す
     // roundCount = 0; // ラウンド数をリセット
@@ -285,10 +297,10 @@ function resetGame() {
     //     scoreboardBody.innerHTML = '';
     // }
     // スコアボードリセットはうまくいかなかったのでページリロードにする↓
-    const resetButton = document.getElementById('resetButton');
-    resetButton.addEventListener('click', function () {
-        location.reload(); // ページをリロードする。はずだが？
-    });
-    resetButton.style.display = 'none'; // リセットボタンを非表示にする
+    // 【備忘録】下記でボタンについて定義しちゃってるが、もう7,8行目で定義してるので被ってた。なので単純にリロードしてね、だけでOK
+    // const resetButton = document.getElementById('resetButton');
+    // resetButton.addEventListener('click', function () {
+    location.reload(); // ページをリロードする
+    // });
 }
 

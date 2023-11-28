@@ -73,7 +73,8 @@ main {
     cursor: pointer;
   }
 
-.tooltip {
+/* 手の意味用ツールチップ  */
+.tooltipHand {
     position: absolute;
     bottom: 50%;
     left: 50%;
@@ -89,7 +90,28 @@ main {
     transition: opacity 0.3s, visibility 0.3s;
 }
 
-.handButton:hover .tooltip {
+.handButton:hover .tooltipHand {
+    visibility: visible;
+    opacity: 1;
+}
+
+.tooltipCountry {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    visibility: hidden;
+    width: max-content;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 10px;
+    opacity: 0;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.handButton:hover .tooltipCountry {
     visibility: visible;
     opacity: 1;
 }
