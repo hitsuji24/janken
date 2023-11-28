@@ -11,9 +11,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const country = {
         JPN: {
             hands: [
-                { name: 'rock', image: '/img/rock.png', description: '岩' },
-                { name: 'scissors', image: '/img/scissors.png', description: 'はさみ' },
-                { name: 'paper', image: '/img/paper.png', description: '紙' }
+                { name: 'rock', image: './img/rock.png', description: '岩' },
+                { name: 'scissors', image: './img/scissors.png', description: 'はさみ' },
+                { name: 'paper', image: './img/paper.png', description: '紙' }
             ],
             winMultiplier: 1.5, // 勝利時の報酬倍率
             lossMultiplier: 5, // 敗北時のペナルティ倍率
@@ -22,9 +22,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         CHN: {
             hands: [
-                { name: 'rock', image: '/img/rock.png', description: 'ハンマー' },
-                { name: 'scissors', image: '/img/scissors.png', description: 'はさみ' },
-                { name: 'paper', image: '/img/paper.png', description: '爆発' }
+                { name: 'rock', image: './img/rock.png', description: 'ハンマー' },
+                { name: 'scissors', image: './img/scissors.png', description: 'はさみ' },
+                { name: 'paper', image: './img/paper.png', description: '爆発' }
             ],
             winMultiplier: 3, // 勝利時の報酬倍率
             lossMultiplier: 5, // 敗北時のペナルティ倍率
@@ -33,11 +33,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
         MYS: {
             hands: [
-                { name: 'water', image: '/img/water.png', description: '水' },
-                { name: 'board', image: '/img/board.png', description: '板' },
-                { name: 'bird', image: '/img/bird.png', description: '小鳥' },
-                { name: 'gun', image: '/img/gun.png', description: '拳銃' },
-                { name: 'rock', image: '/img/rock-malaysia.png', description: '岩' }
+                { name: 'water', image: './img/water.png', description: '水' },
+                { name: 'board', image: './img/board.png', description: '板' },
+                { name: 'bird', image: './img/bird.png', description: '小鳥' },
+                { name: 'gun', image: './img/gun.png', description: '拳銃' },
+                { name: 'rock', image: './img/rock-malaysia.png', description: '岩' }
             ],
             winMultiplier: 3, // 勝利時の報酬倍率
             lossMultiplier: 5, // 敗北時のペナルティ倍率
@@ -46,9 +46,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         SGP: {
             hands: [
-                { name: 'water', image: '/img/water.png', description: '水' },
-                { name: 'rock', image: '/img/rock-singapore.png', description: '石' },
-                { name: 'dragon', image: '/img/well.png', description: '竜' }
+                { name: 'water', image: './img/water.png', description: '水' },
+                { name: 'rock', image: './img/rock-singapore.png', description: '石' },
+                { name: 'dragon', image: './img/well.png', description: '竜' }
             ],
             winMultiplier: 3, // 勝利時の報酬倍率
             lossMultiplier: 5, // 敗北時のペナルティ倍率
@@ -57,9 +57,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         IDN: {
             hands: [
-                { name: 'ant', image: '/img/ant.png', description: '蟻' },
-                { name: 'elephant', image: '/img/elephant.png', description: '象' },
-                { name: 'human', image: '/img/human.png', description: '人間' }
+                { name: 'ant', image: './img/ant.png', description: '蟻' },
+                { name: 'elephant', image: './img/elephant.png', description: '象' },
+                { name: 'human', image: './img/human.png', description: '人間' }
             ],
             winMultiplier: 3, // 勝利時の報酬倍率
             lossMultiplier: 5, // 敗北時のペナルティ倍率
@@ -68,10 +68,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         FRA: {
             hands: [
-                { name: 'rock', image: '/img/rock.png', description: '石' },
-                { name: 'scissors', image: '/img/scissors.png', description: 'はさみ' },
-                { name: 'paper', image: '/img/paper.png', description: '木の葉' },
-                { name: 'well', image: '/img/well.png', description: '井戸' }
+                { name: 'rock', image: './img/rock.png', description: '石' },
+                { name: 'scissors', image: './img/scissors.png', description: 'はさみ' },
+                { name: 'paper', image: './img/paper.png', description: '木の葉' },
+                { name: 'well', image: './img/well.png', description: '井戸' }
             ],
             winMultiplier: 3, // 勝利時の報酬倍率
             lossMultiplier: 5, // 敗北時のペナルティ倍率
@@ -80,9 +80,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         USA: {
             hands: [
-                { name: 'rock', image: '/img/rock.png', description: '岩' },
-                { name: 'scissors', image: '/img/scissors.png', description: 'はさみ' },
-                { name: 'paper', image: '/img/paper.png', description: '紙' }
+                { name: 'rock', image: './img/rock.png', description: '岩' },
+                { name: 'scissors', image: './img/scissors.png', description: 'はさみ' },
+                { name: 'paper', image: './img/paper.png', description: '紙' }
             ],
             winMultiplier: 3, // 勝利時の報酬倍率
             lossMultiplier: 5, // 敗北時のペナルティ倍率
@@ -226,9 +226,9 @@ document.addEventListener('DOMContentLoaded', function () {
         function getResultImage(result) {
             // 勝敗結果に応じた画像のパスを設定する
             const resultImages = {
-                win: '/img/win.png',   // 勝ちの画像のパス
-                lose: '/img/lose.png', // 負けの画像のパス
-                draw: '/img/draw.png'  // 引き分けの画像のパス
+                win: './img/win.png',   // 勝ちの画像のパス
+                lose: './img/lose.png', // 負けの画像のパス
+                draw: './img/draw.png'  // 引き分けの画像のパス
             };
 
             // resultImages オブジェクトから対応する画像のパスを返す
