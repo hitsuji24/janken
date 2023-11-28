@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <script src="./js/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <title>世界のじゃんけん</title>
+</head>
+
+<body>
+    
+    <header>
+        <h1>【色々な国のじゃんけん】世界を飛び回って所持金を増やそう！</h1>
+    </header>
+
+    <main>
+        <section class="informationColumn">
+            <h2>参考情報</h2>
+            <h3>日本</h3>
+            <p>
+                「技術と伝統、安全な賭け」<br>
+                勝利時の倍率: 2倍<br>
+                敗北時の倍率: ‐1.2倍<br>
+                </p>
+                <h3>中国</h3>
+                <p> 「大きなリスク、大きな報酬」<br>
+                    勝利時の倍率: 2.5倍<br>
+                    敗北時の倍率: ‐3倍<br>
+                </p>
+                <h3>マレーシア</h3>
+                <p>
+                    「文化のるつぼ、安定した成長」<br>
+                    勝利時の倍率: 2倍<br>
+                    敗北時の倍率: ‐1.5倍<br>
+                </p>
+                <h3>シンガポール</h3>
+                <p>「小国、大きな夢、安全プレイ」 <br>
+                    勝利時の倍率: 1.8倍<br>
+                    敗北時の倍率: ‐1.3倍<br></p>
+                <h3>インドネシア</h3>
+                <p> 「多様な文化、チャンスとリスク」<br>
+                    勝利時の倍率: 3倍<br>
+                    敗北時の倍率: ‐2倍<br></p>
+                <h3>フランス</h3>
+                <p> 「エスプリあふれ、均衡のゲーム」<br>
+                    勝利時の倍率: 1.5倍<br>
+                    敗北時の倍率: ‐1倍<br></p>
+                <h3>アメリカ</h3>
+                <p>「夢追い人の大勝負」<br>
+                    勝利時の倍率: 5倍<br>
+                    敗北時の倍率: ‐5倍<br></p></p>
+
+
+            
+        </section>
+
+        <section class="mainColumn">
+            <!-- リセットボタン、初期状態では非表示 -->
+            <button id="resetButton" style="display:none;">ゲームをリセット</button>
+            <section class="countryChoiceArea">
+                <h2>国を選択してください</h2>
+                <P>勝負ごとに変更可能です👍</P>
+                <div class="country">
+                    <img src="/img/flag_japan.png" alt="JPN" class="countryFlag">
+                    <img src="/img/flag_china.png" alt="CHN" class="countryFlag">
+                    <img src="/img/flag_malaysia.png" alt="MYS" class="countryFlag">
+                    <img src="/img/flag_singapore.png" alt="SGP" class="countryFlag">
+                    <img src="/img/flag_indonesia.png" alt="IDN" class="countryFlag">
+                    <img src="/img/flag_france.png" alt="FRA" class="countryFlag">
+                    <img src="/img/flag_usa.png" alt="USA" class="countryFlag">
+                </div>
+            </section>
+            <section class="playArea">
+                <h2>じゃんけんの手を選択</h2>
+                <div class="handChoice">
+                    <!-- JavaScriptでじゃんけんの手の画像を表示 -->
+                </div>
+                <h2>じゃんけんぽん！</h2>
+                <div class="handResult">
+                    <!-- JavaScriptでじゃんけんの結果を表示 -->
+                </div>
+            </section>
+        </section>
+
+        <section class="statusColumn">
+            <div class="scoreHistory">
+                <h2>スコアボード</h2>
+                <div class="currentMoney">
+                    <p>あなたの現在の所持金: <span id="moneyDisplay">10000</span>円</p>
+                </div>
+                <table id="scoreTable">
+                    <thead>
+                        <tr>
+                            <th>回数</th>
+                            <th>国</th>
+                            <th>勝敗</th>
+                            <th>所持金</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- ここにJavaScriptで履歴が追加される -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <footer></footer>
+</body>
+
+</html>

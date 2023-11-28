@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 { name: 'paper', image: '/img/paper.png', description: '紙' }
             ],
             winMultiplier: 1.5, // 勝利時の報酬倍率
-            lossMultiplier: 1.5 // 敗北時のペナルティ倍率
-            odds:'テスト'
+            lossMultiplier: 5, // 敗北時のペナルティ倍率
+            odds: `アメリカンドリーム！勝ったら3倍、負けたら-5倍`
         },
 
         CHN: {
@@ -27,7 +27,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 { name: 'paper', image: '/img/paper.png', description: '爆発' }
             ],
             winMultiplier: 3, // 勝利時の報酬倍率
-            lossMultiplier: 5 // 敗北時のペナルティ倍率
+            lossMultiplier: 5, // 敗北時のペナルティ倍率
+            odds: `アメリカンドリーム！勝ったら3倍、負けたら-5倍`
         },
 
         MYS: {
@@ -39,7 +40,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 { name: 'rock', image: '/img/rock-malaysia.png', description: '岩' }
             ],
             winMultiplier: 3, // 勝利時の報酬倍率
-            lossMultiplier: 5 // 敗北時のペナルティ倍率
+            lossMultiplier: 5, // 敗北時のペナルティ倍率
+            odds: `アメリカンドリーム！勝ったら3倍、負けたら-5倍`
         },
 
         SGP: {
@@ -49,7 +51,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 { name: 'dragon', image: '/img/well.png', description: '竜' }
             ],
             winMultiplier: 3, // 勝利時の報酬倍率
-            lossMultiplier: 5 // 敗北時のペナルティ倍率
+            lossMultiplier: 5, // 敗北時のペナルティ倍率
+            odds: `アメリカンドリーム！勝ったら3倍、負けたら-5倍`
         },
 
         IDN: {
@@ -59,7 +62,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 { name: 'human', image: '/img/human.png', description: '人間' }
             ],
             winMultiplier: 3, // 勝利時の報酬倍率
-            lossMultiplier: 5 // 敗北時のペナルティ倍率
+            lossMultiplier: 5, // 敗北時のペナルティ倍率
+            odds: `アメリカンドリーム！勝ったら3倍、負けたら-5倍`
         },
 
         FRA: {
@@ -70,7 +74,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 { name: 'well', image: '/img/well.png', description: '井戸' }
             ],
             winMultiplier: 3, // 勝利時の報酬倍率
-            lossMultiplier: 5 // 敗北時のペナルティ倍率
+            lossMultiplier: 5, // 敗北時のペナルティ倍率
+            odds: `アメリカンドリーム！勝ったら3倍、負けたら-5倍`
         },
 
         USA: {
@@ -80,15 +85,37 @@ document.addEventListener('DOMContentLoaded', function () {
                 { name: 'paper', image: '/img/paper.png', description: '紙' }
             ],
             winMultiplier: 3, // 勝利時の報酬倍率
-            lossMultiplier: 5 // 敗北時のペナルティ倍率,
-            odds:'アメリカンドリーム！勝ったら'+winMultiplier+'倍,負けたら'+lossMultiplier+'倍'
+            lossMultiplier: 5, // 敗北時のペナルティ倍率
+            odds: `アメリカンドリーム！勝ったら3倍、負けたら-5倍`
         },
     };
+
+
 
 
     // 国の選択：国旗をクリックしてその国のじゃんけんの手を表示
     const countryImages = document.querySelectorAll('.country img');
     countryImages.forEach(img => {
+
+        // マウスオーバーでツールチップ  【疑問】永遠にうまくいかない 
+        img.addEventListener('mouseover', function() {
+            const countryName = this.alt;
+            const countryData = country[countryName];
+            if (countryData && countryData.odds) {
+                const tooltip = document.createElement('span');
+                tooltip.className = 'tooltipCountry';
+                tooltip.textContent = countryData.odds;
+                this.appendChild(tooltip);
+            }
+        });
+    
+        img.addEventListener('mouseleave', function() {
+            const tooltip = this.querySelector('.tooltipCountry');
+            if (tooltip) {
+                this.removeChild(tooltip);
+            }
+        });
+
         img.addEventListener('click', function () {
             const countryName = this.alt // 国名を取得
             // ↑【備忘録】国名を大文字のコードにしたので.toLowerCase()が悪さしていた
@@ -108,23 +135,19 @@ document.addEventListener('DOMContentLoaded', function () {
         selectedImg.classList.add('highlight');
     }
 
-    // 国ごとの倍率をツールチップで表示
-    const tooltipCountry= document.createElement('span'); // ツールチップ用のspan要素を作成
-    tooltipCountry.className = 'tooltipHand';
-    tooltipCountry.textContent = country.odds; // ツールチップのテキストを設定
-    countryImages.appendChild(tooltipCountry); // handButtonにtooltipを追加
 
 
     // handChoice エリアの背景色を変更する関数 →かわいくないのでやめる
     // function changeHandChoiceBackground(country) {
     //     const handChoiceArea = document.querySelector('.handChoice');
     //     const bgColors = {
-        // 国ごとに特有の色を指定
+    // 国ごとに特有の色を指定
     //         JPN: 'linear-gradient(to right, #fff, #f00, #fff)',
     //         USA: 'linear-gradient(to right, #00f, #fff, #f00)',
     //     };
     //     handChoiceArea.style.background = bgColors[country] || 'none';
     // }
+
 
     // じゃんけんの手を表示：選択された国のじゃんけんの手がボタンとして表示
     function displayHands(country) {
@@ -271,8 +294,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const scoreboard = document.querySelector('.scoreHistory table');
             const row = scoreboard.insertRow(-1);
             row.insertCell(0).textContent = round;
-            row.insertCell(1).textContent = countryName;
-            // 【疑問】国名表示されない
+            row.insertCell(1).textContent = countryName; // 【疑問】国名表示されない
             row.insertCell(2).textContent = result;
             row.insertCell(3).textContent = playerMoney;
         }
