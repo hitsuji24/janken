@@ -15,9 +15,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 { name: 'scissors', image: './img/scissors.png', description: 'はさみ' },
                 { name: 'paper', image: './img/paper.png', description: '紙' }
             ],
-            winMultiplier: 1.5, // 勝利時の報酬倍率
-            lossMultiplier: 5, // 敗北時のペナルティ倍率
-            odds: `アメリカンドリーム！勝ったら3倍、負けたら-5倍`
+            winMultiplier: 2, // 勝利時の報酬倍率
+            lossMultiplier: 1.2, // 敗北時のペナルティ倍率
+            // odds: `アメリカンドリーム！勝ったら3倍、負けたら-5倍`
         },
 
         CHN: {
@@ -26,9 +26,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 { name: 'scissors', image: './img/scissors.png', description: 'はさみ' },
                 { name: 'paper', image: './img/paper.png', description: '爆発' }
             ],
-            winMultiplier: 3, // 勝利時の報酬倍率
-            lossMultiplier: 5, // 敗北時のペナルティ倍率
-            odds: `アメリカンドリーム！勝ったら3倍、負けたら-5倍`
+            winMultiplier: 2, // 勝利時の報酬倍率
+            lossMultiplier: 3.5, // 敗北時のペナルティ倍率
+            // odds: `アメリカンドリーム！勝ったら3倍、負けたら-5倍`
         },
 
         MYS: {
@@ -39,9 +39,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 { name: 'gun', image: './img/gun.png', description: '拳銃' },
                 { name: 'rock', image: './img/rock-malaysia.png', description: '岩' }
             ],
-            winMultiplier: 3, // 勝利時の報酬倍率
-            lossMultiplier: 5, // 敗北時のペナルティ倍率
-            odds: `アメリカンドリーム！勝ったら3倍、負けたら-5倍`
+            winMultiplier: 2, // 勝利時の報酬倍率
+            lossMultiplier: 1.5, // 敗北時のペナルティ倍率
+            // odds: `アメリカンドリーム！勝ったら3倍、負けたら-5倍`
         },
 
         SGP: {
@@ -50,9 +50,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 { name: 'rock', image: './img/rock-singapore.png', description: '石' },
                 { name: 'dragon', image: './img/well.png', description: '竜' }
             ],
-            winMultiplier: 3, // 勝利時の報酬倍率
-            lossMultiplier: 5, // 敗北時のペナルティ倍率
-            odds: `アメリカンドリーム！勝ったら3倍、負けたら-5倍`
+            winMultiplier: 1.8, // 勝利時の報酬倍率
+            lossMultiplier: 1.3, // 敗北時のペナルティ倍率
+            // odds: `アメリカンドリーム！勝ったら3倍、負けたら-5倍`
         },
 
         IDN: {
@@ -62,8 +62,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 { name: 'human', image: './img/human.png', description: '人間' }
             ],
             winMultiplier: 3, // 勝利時の報酬倍率
-            lossMultiplier: 5, // 敗北時のペナルティ倍率
-            odds: `アメリカンドリーム！勝ったら3倍、負けたら-5倍`
+            lossMultiplier: 2, // 敗北時のペナルティ倍率
+            // odds: `アメリカンドリーム！勝ったら3倍、負けたら-5倍`
         },
 
         FRA: {
@@ -73,9 +73,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 { name: 'paper', image: './img/paper.png', description: '木の葉' },
                 { name: 'well', image: './img/well.png', description: '井戸' }
             ],
-            winMultiplier: 3, // 勝利時の報酬倍率
-            lossMultiplier: 5, // 敗北時のペナルティ倍率
-            odds: `アメリカンドリーム！勝ったら3倍、負けたら-5倍`
+            winMultiplier: 1.5, // 勝利時の報酬倍率
+            lossMultiplier: 1, // 敗北時のペナルティ倍率
+            // odds: `アメリカンドリーム！勝ったら3倍、負けたら-5倍`
         },
 
         USA: {
@@ -84,9 +84,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 { name: 'scissors', image: './img/scissors.png', description: 'はさみ' },
                 { name: 'paper', image: './img/paper.png', description: '紙' }
             ],
-            winMultiplier: 3, // 勝利時の報酬倍率
+            winMultiplier: 5, // 勝利時の報酬倍率
             lossMultiplier: 5, // 敗北時のペナルティ倍率
-            odds: `アメリカンドリーム！勝ったら3倍、負けたら-5倍`
+            // odds: `アメリカンドリーム！勝ったら3倍、負けたら-5倍`
         },
     };
 
