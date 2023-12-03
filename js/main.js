@@ -239,9 +239,9 @@ document.addEventListener('DOMContentLoaded', function () {
         // 所持金の更新：勝敗に応じてプレイヤーの所持金が更新
         function updateMoney(result, country) {
             if (result === 'win') {
-                playerMoney *= Math.floor(country.winMultiplier);
+                playerMoney = Math.floor(playerMoney * country.winMultiplier);
             } else if (result === 'lose') {
-                playerMoney /= Math.floor(country.lossMultiplier);
+                playerMoney = Math.floor(playerMoney / country.lossMultiplier);
             }
             // 'draw'の場合は所持金に変更なし
             document.querySelector('.currentMoney p').textContent = `あなたの現在の所持金: ${playerMoney}円`;
@@ -273,7 +273,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // ＜リーダーボード＞ユーザー名の入力と結果の保存
-        // 5回戦目が終わった時に、ユーザーにユーザー名を入力してもらう
         // 入力されたユーザー名と現在の所持金でsaveGameResult関数を呼び出し
         function promptForUsernameAndSaveResult(money) {
             const username = prompt("ゲーム終了！ユーザー名を入力してください:");
@@ -281,6 +280,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 saveGameResult(username, money);
             }
         }
+
 
         // 【実行】
         // 結果表示エリア
