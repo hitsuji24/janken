@@ -1,6 +1,22 @@
 
 // DOMがロードされた後、イベントリスナーが設定され、国の選択やじゃんけんの手の選択が可能になる
 document.addEventListener('DOMContentLoaded', function () {
+    
+    // リーダーボードの表示
+    const resultsJson = localStorage.getItem('gameResults') || '[]';
+    const gameResults = JSON.parse(resultsJson);
+    displayLeaderboard(gameResults);
+
+function displayLeaderboard(gameResults) {
+    const leaderboard = document.querySelector('#leaderBoardTable tbody');
+    gameResults.forEach(result => {
+        const row = leaderboard.insertRow(-1);
+        row.insertCell(0).textContent = result.username;
+        row.insertCell(1).textContent = result.money;
+        row.insertCell(2).textContent = result.date;
+    });
+
+
     let playerMoney = 10000; // プレイヤーの初期所持金
     let roundCount = 0; // 現在のラウンド数    
 
@@ -98,23 +114,23 @@ document.addEventListener('DOMContentLoaded', function () {
     countryImages.forEach(img => {
 
         // マウスオーバーでツールチップ  【疑問】永遠にうまくいかない 
-        img.addEventListener('mouseover', function() {
-            const countryName = this.alt;
-            const countryData = country[countryName];
-            if (countryData && countryData.odds) {
-                const tooltip = document.createElement('span');
-                tooltip.className = 'tooltipCountry';
-                tooltip.textContent = countryData.odds;
-                this.appendChild(tooltip);
-            }
-        });
-    
-        img.addEventListener('mouseleave', function() {
-            const tooltip = this.querySelector('.tooltipCountry');
-            if (tooltip) {
-                this.removeChild(tooltip);
-            }
-        });
+        // img.addEventListener('mouseover', function () {
+        //     const countryName = this.alt;
+        //     const countryData = country[countryName];
+        //     if (countryData && countryData.odds) {
+        //         const tooltip = document.createElement('span');
+        //         tooltip.className = 'tooltipCountry';
+        //         tooltip.textContent = countryData.odds;
+        //         this.appendChild(tooltip);
+        //     }
+        // });
+
+        // img.addEventListener('mouseleave', function () {
+        //     const tooltip = this.querySelector('.tooltipCountry');
+        //     if (tooltip) {
+        //         this.removeChild(tooltip);
+        //     }
+        // });
 
         img.addEventListener('click', function () {
             const countryName = this.alt // 国名を取得
@@ -237,11 +253,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // 【疑問】このメッセージをスコアボードの更新後に出すには？playGroundの定義に出してもだめだった
         // 【あとで】終わった時点でボタン押せなくしたい。
+        // 【備忘録】ラウンドカウントのインクリメントの前に持ってきたら意図通りになった
         if (roundCount == 4) {
             alert('次で最後の勝負！');
         }
         if (roundCount >= 5) {
-            alert('このゲームは終了しました。また遊んでね！');
+            // alert('このゲームは終了しました。また遊んでね！');
+            promptForUsernameAndSaveResult(playerMoney);
             resetButton.style.display = 'block'; // リセットボタンを表示
             return; // 関数から抜ける
         }
@@ -281,9 +299,9 @@ document.addEventListener('DOMContentLoaded', function () {
         // 所持金の更新：勝敗に応じてプレイヤーの所持金が更新
         function updateMoney(result, country) {
             if (result === 'win') {
-                playerMoney *= country.winMultiplier;
+                playerMoney *= Math.floor(country.winMultiplier);
             } else if (result === 'lose') {
-                playerMoney /= country.lossMultiplier;
+                playerMoney *= Math.floor(country.lossMultiplier);
             }
             // 'draw'の場合は所持金に変更なし
             document.querySelector('.currentMoney p').textContent = `あなたの現在の所持金: ${playerMoney}円`;
@@ -298,9 +316,37 @@ document.addEventListener('DOMContentLoaded', function () {
             row.insertCell(2).textContent = result;
             row.insertCell(3).textContent = playerMoney;
         }
+
+        //＜リーダーボード＞スコアを保存する関数
+        // ユーザーのゲーム結果（ユーザー名、所持金、日時）をオブジェクトとして保存します。
+        // このオブジェクトをJSON形式に変換してlocalStorageに保存します。
+        function saveGameResult(username, money) {
+            const gameResult = {
+                username: username,
+                money: money,
+                date: new Date().toLocaleString()
+            };
+            const resultsJson = localStorage.getItem('gameResults') || '[]';
+            const gameResults = JSON.parse(resultsJson);
+            gameResults.push(gameResult);
+            localStorage.setItem('gameResults', JSON.stringify(gameResults));
+        }
+
+        // ＜リーダーボード＞ユーザー名の入力と結果の保存
+        // 5回戦目が終わった時に、ユーザーにユーザー名を入力してもらいます。
+        // 入力されたユーザー名と現在の所持金でsaveGameResult関数を呼び出します。
+        function promptForUsernameAndSaveResult(money) {
+            const username = prompt("ゲーム終了！ユーザー名を入力してください:");
+            if (username) {
+                saveGameResult(username, money);
+            }
+        }
     }
 }
-);
+
+});
+
+
 
 
 // ゲームをリセットする関数
