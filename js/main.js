@@ -1,27 +1,42 @@
+// ゲームをリセットする関数
+function resetGame() {
+    // playerMoney = 10000; // 初期所持金に戻す
+    // roundCount = 0; // ラウンド数をリセット
+    // currentPlayerCountry = 'JPN'; // 初期国に戻す
+
+    // スコアボードの中身をリセット
+    // const scoreboard = document.querySelector('.scoreHistory table');
+    // const tbody = scoreboard.getElementsByTagName('tbody')[0]; //スコアボードを構成するテーブルのtbody要素を取得
+    // tbody.innerHTML = ''; //tbodyのinnerHTMLを空に設定することで行をクリア（するはず）回数はリセットされてる
+    // ↓別のスコアボードリセットのやりかた
+    // const scoreboardBody = document.querySelector('.scoreHistory tbody'); //クラス名が scoreHistory の要素内の最初の tbody を選択
+    // if (scoreboardBody) {
+    //     scoreboardBody.innerHTML = '';
+    // }
+
+    // スコアボードリセットはうまくいかなかったのでページリロードにする↓
+    // 【備忘録】下記でボタンについて定義しちゃってるが、もう7,8行目で定義してるので被ってた。なので単純にリロードしてね、だけでOK
+    // const resetButton = document.getElementById('resetButton');
+    // resetButton.addEventListener('click', function () {
+    location.reload(); // ページをリロードする
+    // });
+}
+
 
 // DOMがロードされた後、イベントリスナーが設定され、国の選択やじゃんけんの手の選択が可能になる
 document.addEventListener('DOMContentLoaded', function () {
-    
+    // 【定数と設定】
     // リーダーボードの表示
     const resultsJson = localStorage.getItem('gameResults') || '[]';
     const gameResults = JSON.parse(resultsJson);
-    displayLeaderboard(gameResults);
 
-function displayLeaderboard(gameResults) {
-    const leaderboard = document.querySelector('#leaderBoardTable tbody');
-    gameResults.forEach(result => {
-        const row = leaderboard.insertRow(-1);
-        row.insertCell(0).textContent = result.username;
-        row.insertCell(1).textContent = result.money;
-        row.insertCell(2).textContent = result.date;
-    });
-
-
-    let playerMoney = 10000; // プレイヤーの初期所持金
-    let roundCount = 0; // 現在のラウンド数    
-
+    //    リセットボタン
     const resetButton = document.getElementById('resetButton');
     resetButton.addEventListener('click', resetGame);
+
+    //    初期設定
+    let playerMoney = 10000; // プレイヤーの初期所持金
+    let roundCount = 0; // 現在のラウンド数   
 
     // countryオブジェクトに各国のじゃんけんの手と倍率を定義 
     const country = {
@@ -106,42 +121,23 @@ function displayLeaderboard(gameResults) {
         },
     };
 
-
-
-
-    // 国の選択：国旗をクリックしてその国のじゃんけんの手を表示
+    // 国の画像
     const countryImages = document.querySelectorAll('.country img');
-    countryImages.forEach(img => {
 
-        // マウスオーバーでツールチップ  【疑問】永遠にうまくいかない 
-        // img.addEventListener('mouseover', function () {
-        //     const countryName = this.alt;
-        //     const countryData = country[countryName];
-        //     if (countryData && countryData.odds) {
-        //         const tooltip = document.createElement('span');
-        //         tooltip.className = 'tooltipCountry';
-        //         tooltip.textContent = countryData.odds;
-        //         this.appendChild(tooltip);
-        //     }
-        // });
 
-        // img.addEventListener('mouseleave', function () {
-        //     const tooltip = this.querySelector('.tooltipCountry');
-        //     if (tooltip) {
-        //         this.removeChild(tooltip);
-        //     }
-        // });
-
-        img.addEventListener('click', function () {
-            const countryName = this.alt // 国名を取得
-            // ↑【備忘録】国名を大文字のコードにしたので.toLowerCase()が悪さしていた
-            highlightCountry(this); //ハイライト
-            // changeHandChoiceBackground(countryName); //背景色
-            displayHands(country[countryName]);
+    // 【関数定義】
+    // リーダーボードの表示
+    function displayLeaderboard(gameResults) {
+        const leaderboard = document.querySelector('#leaderBoardTable tbody');
+        gameResults.forEach(result => {
+            const row = leaderboard.insertRow(-1);
+            row.insertCell(0).textContent = result.username;
+            row.insertCell(1).textContent = result.money;
+            row.insertCell(2).textContent = result.date;
         });
-    });
+    }
 
-    // 選択された国をハイライトする関数
+    // 選択された国をハイライト
     function highlightCountry(selectedImg) {
         // すべての国の画像からハイライトを削除
         document.querySelectorAll('.country img').forEach(img => {
@@ -150,20 +146,6 @@ function displayLeaderboard(gameResults) {
         // 選択された国の画像にハイライトを追加
         selectedImg.classList.add('highlight');
     }
-
-
-
-    // handChoice エリアの背景色を変更する関数 →かわいくないのでやめる
-    // function changeHandChoiceBackground(country) {
-    //     const handChoiceArea = document.querySelector('.handChoice');
-    //     const bgColors = {
-    // 国ごとに特有の色を指定
-    //         JPN: 'linear-gradient(to right, #fff, #f00, #fff)',
-    //         USA: 'linear-gradient(to right, #00f, #fff, #f00)',
-    //     };
-    //     handChoiceArea.style.background = bgColors[country] || 'none';
-    // }
-
 
     // じゃんけんの手を表示：選択された国のじゃんけんの手がボタンとして表示
     function displayHands(country) {
@@ -190,55 +172,30 @@ function displayLeaderboard(gameResults) {
         });
     }
 
-    // ラウンドをプレイ：プレイヤーが手を選択すると、PCとの勝負が行われ、勝敗に応じて所持金が更新
+    // ★ラウンドをプレイ：プレイヤーが手を選択すると、PCとの勝負が行われ、勝敗に応じて所持金が更新
     function playRound(playerHand, country) {
+        // 【定数と設定】
         const pcHand = country.hands[Math.floor(Math.random() * country.hands.length)].name;
         const result = determineWinner(playerHand, pcHand);
+        const userHandImg = document.createElement('img');
+        const resultImg = document.createElement('img');
+        const pcHandImg = document.createElement('img');
+
+
 
 
         // 結果表示エリア
         const handResultArea = document.querySelector('.handResult');
-        handResultArea.innerHTML = ''; // 既存の内容をクリア
 
-        // ユーザーの手の画像
-        const userHandImg = document.createElement('img');
-        userHandImg.src = getHandImage(playerHand, country);
-        userHandImg.style.transform = 'scaleX(-1)'; // 画像を反転
-        handResultArea.appendChild(userHandImg);
 
-        // 勝敗結果の画像
-        const resultImg = document.createElement('img');
-        resultImg.src = getResultImage(result); // 勝敗結果に応じた画像を取得
-        resultImg.style.display = 'none'; // 初期状態では非表示
-        resultImg.onload = function () {
-            $(resultImg).fadeIn(1000); // 画像のロードが完了したらフェードイン
-        };
-        handResultArea.appendChild(resultImg);
-
-        // PCの手の画像
-        const pcHandImg = document.createElement('img');
-        pcHandImg.src = getHandImage(pcHand, country);
-        handResultArea.appendChild(pcHandImg);
-
-        $('#userHand, #pcHand').animate({
-            width: '150px'
-        }, 500); // 手の画像を大きく表示
-
-        updateMoney(result, country); // 所持金の更新
-
-        // スコアボードの更新
-        //【備忘録】5回までは回す、それ以降はやらないというif文にするといいかも
-        // updateScoreboard(roundCount + 1, country.alt, result); // スコアボードの更新
-        if (roundCount < 5) {
-            updateScoreboard(roundCount + 1, country.alt, result);
-        }
-
+        // 【関数定義】
         // 手の画像を取得する関数
         function getHandImage(handName, country) {
             const hand = country.hands.find(h => h.name === handName);
             return hand ? hand.image : '';
         }
 
+        // 勝敗結果の画像を取得する関数
         function getResultImage(result) {
             // 勝敗結果に応じた画像のパスを設定する
             const resultImages = {
@@ -250,23 +207,6 @@ function displayLeaderboard(gameResults) {
             // resultImages オブジェクトから対応する画像のパスを返す
             return resultImages[result] || 'path/to/default-result-image.png';
         }
-
-        // 【疑問】このメッセージをスコアボードの更新後に出すには？playGroundの定義に出してもだめだった
-        // 【あとで】終わった時点でボタン押せなくしたい。
-        // 【備忘録】ラウンドカウントのインクリメントの前に持ってきたら意図通りになった
-        if (roundCount == 4) {
-            alert('次で最後の勝負！');
-        }
-        if (roundCount >= 5) {
-            // alert('このゲームは終了しました。また遊んでね！');
-            promptForUsernameAndSaveResult(playerMoney);
-            resetButton.style.display = 'block'; // リセットボタンを表示
-            return; // 関数から抜ける
-        }
-
-
-        roundCount++; // ラウンドカウントのインクリメント
-
 
         // 勝敗判定：determineWinner 関数でプレイヤーとPCの手を比較し、勝敗を決定
         function determineWinner(playerHand, pcHand) {
@@ -301,7 +241,7 @@ function displayLeaderboard(gameResults) {
             if (result === 'win') {
                 playerMoney *= Math.floor(country.winMultiplier);
             } else if (result === 'lose') {
-                playerMoney *= Math.floor(country.lossMultiplier);
+                playerMoney /= Math.floor(country.lossMultiplier);
             }
             // 'draw'の場合は所持金に変更なし
             document.querySelector('.currentMoney p').textContent = `あなたの現在の所持金: ${playerMoney}円`;
@@ -318,8 +258,8 @@ function displayLeaderboard(gameResults) {
         }
 
         //＜リーダーボード＞スコアを保存する関数
-        // ユーザーのゲーム結果（ユーザー名、所持金、日時）をオブジェクトとして保存します。
-        // このオブジェクトをJSON形式に変換してlocalStorageに保存します。
+        // ユーザーのゲーム結果（ユーザー名、所持金、日時）をオブジェクトとして保存
+        // このオブジェクトをJSON形式に変換してlocalStorageに保存
         function saveGameResult(username, money) {
             const gameResult = {
                 username: username,
@@ -333,42 +273,81 @@ function displayLeaderboard(gameResults) {
         }
 
         // ＜リーダーボード＞ユーザー名の入力と結果の保存
-        // 5回戦目が終わった時に、ユーザーにユーザー名を入力してもらいます。
-        // 入力されたユーザー名と現在の所持金でsaveGameResult関数を呼び出します。
+        // 5回戦目が終わった時に、ユーザーにユーザー名を入力してもらう
+        // 入力されたユーザー名と現在の所持金でsaveGameResult関数を呼び出し
         function promptForUsernameAndSaveResult(money) {
             const username = prompt("ゲーム終了！ユーザー名を入力してください:");
             if (username) {
                 saveGameResult(username, money);
             }
         }
+
+        // 【実行】
+        // 結果表示エリア
+        handResultArea.innerHTML = ''; // 既存の内容をクリア
+
+        // ユーザーの手の画像（userHandImg）を表示
+        userHandImg.src = getHandImage(playerHand, country);
+        userHandImg.style.transform = 'scaleX(-1)'; // 画像を反転
+        handResultArea.appendChild(userHandImg);
+
+        // 勝敗結果の画像（resultImg）を表示
+        resultImg.src = getResultImage(result); // 勝敗結果に応じた画像を取得
+        resultImg.style.display = 'none'; // 初期状態では非表示
+        resultImg.onload = function () {
+            $(resultImg).fadeIn(1000); // 画像のロードが完了したらフェードイン
+        };
+        handResultArea.appendChild(resultImg);
+
+        // PCの手の画像（ pcHandImg）を表示
+        pcHandImg.src = getHandImage(pcHand, country);
+        handResultArea.appendChild(pcHandImg);
+
+        updateMoney(result, country); // 所持金の更新
+
+        // スコアボードの更新
+        //【備忘録】5回までは実行、それ以降はやらないというif文にすれば6回以降も書き続けちゃうの止まる
+        if (roundCount < 5) {
+            updateScoreboard(roundCount + 1, country.alt, result);
+        }
+
+        // 【備忘録】このメッセージをスコアボードの更新後に出すには→ラウンドカウントのインクリメントの前に持ってきたら意図通りになった
+        if (roundCount == 4) {
+            alert('次で最後の勝負！');
+        }
+
+        if (roundCount >= 5) {
+            // alert('このゲームは終了しました。また遊んでね！');
+            promptForUsernameAndSaveResult(playerMoney);
+            resetButton.style.display = 'block'; // リセットボタンを表示
+            return; // 関数から抜ける
+        }
+
+        roundCount++; // ラウンドカウントのインクリメント
+
     }
-}
+
+    // 【実行】
+    // リーダーボードの表示
+    displayLeaderboard(gameResults);
+
+    // 国の選択：国旗をクリックしてその国のじゃんけんの手を表示
+    countryImages.forEach(img => {
+        img.addEventListener('click', function () {
+            const countryName = this.alt // 国名を取得
+            // ↑【備忘録】国名を大文字のコードにしたので.toLowerCase()が悪さしていた
+            highlightCountry(this); //ハイライト
+            // changeHandChoiceBackground(countryName); //背景色
+            displayHands(country[countryName]);
+        });
+    });
+
+
 
 });
 
 
 
 
-// ゲームをリセットする関数
-function resetGame() {
-    // playerMoney = 10000; // 初期所持金に戻す
-    // roundCount = 0; // ラウンド数をリセット
-    // currentPlayerCountry = 'JPN'; // 初期国に戻す
 
-    // スコアボードの中身をリセット
-    // const scoreboard = document.querySelector('.scoreHistory table');
-    // const tbody = scoreboard.getElementsByTagName('tbody')[0]; //スコアボードを構成するテーブルのtbody要素を取得
-    // tbody.innerHTML = ''; //tbodyのinnerHTMLを空に設定することで行をクリア（するはず）回数はリセットされてる
-    // ↓別のスコアボードリセットのやりかた
-    // const scoreboardBody = document.querySelector('.scoreHistory tbody'); //クラス名が scoreHistory の要素内の最初の tbody を選択
-    // if (scoreboardBody) {
-    //     scoreboardBody.innerHTML = '';
-    // }
-    // スコアボードリセットはうまくいかなかったのでページリロードにする↓
-    // 【備忘録】下記でボタンについて定義しちゃってるが、もう7,8行目で定義してるので被ってた。なので単純にリロードしてね、だけでOK
-    // const resetButton = document.getElementById('resetButton');
-    // resetButton.addEventListener('click', function () {
-    location.reload(); // ページをリロードする
-    // });
-}
 
