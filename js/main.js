@@ -48,12 +48,16 @@ function saveGameResult(username, money) {
     const resultsJson = localStorage.getItem('gameResults') || '[]';
     const gameResults = JSON.parse(resultsJson);
     gameResults.push(gameResult);
-    localStorage.setItem('gameResults', JSON.stringify(gameResults));
+
+    // 所持金で降順にソート
+    gameResults.sort((a, b) => b.money - a.money);
     // リーダーボードの既存の内容をクリア
     const leaderboard = document.querySelector('#leaderBoardTable tbody');
     leaderboard.innerHTML = '';
     // リーダーボードを更新
     displayLeaderboard(gameResults);
+    // スコアデータを保存
+    localStorage.setItem('gameResults', JSON.stringify(gameResults));
 }
 
 
@@ -342,10 +346,14 @@ document.addEventListener('DOMContentLoaded', function () {
         roundCount++; // ラウンドカウントのインクリメント
 
         if (roundCount === 5) {
-            // alert('このゲームは終了しました。また遊んでね！');
             resetButton.style.display = 'block'; // リセットボタンを表示
             recordButton.style.display = 'block'; // recordボタンを表示
             return; // 関数から抜ける
+        }
+        if (roundCount >= 5) {
+            alert('このゲームは終了しました。また遊んでね！');
+            return; // 関数から抜ける
+
         }
     }
 
