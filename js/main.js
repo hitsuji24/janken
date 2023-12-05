@@ -353,7 +353,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (roundCount >= 5) {
             alert('このゲームは終了しました。また遊んでね！');
             return; // 関数から抜ける
-
         }
     }
 
