@@ -14,19 +14,22 @@ header {
     text-stroke: 1px red;
 
 }
+
 h2 {
     font-size: 24px;
     padding: 0;
     margin: 8px 0;
 }
 
-h3{
+h3 {
     margin: 4px 0;
     color: rgb(206, 69, 69)
 }
-.mainColumn p{
+
+.mainColumn p {
     margin: 0 0 8px 0;
 }
+
 main {
     display: flex;
     justify-content: center;
@@ -54,16 +57,17 @@ main {
 
 .statusColumn,
 .informationColumn {
-    flex:1;
+    flex: 1;
 }
 
-.informationColumn p{
+.informationColumn p {
     margin: 0 0 16px 0;
 
 }
 
-.statusColumn p{
-    border-bottom: dotted 2px rgb(206, 69, 69)}
+.statusColumn p {
+    border-bottom: dotted 2px rgb(206, 69, 69)
+}
 
 .mainColumn {
     flex: 3;
@@ -153,11 +157,17 @@ main {
     margin-left: -8px;
     border: 8px solid transparent;
     border-top: 8px solid #545454;
-  }
-  @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity:1 ;}
-  }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
 
 .handResult {
     height: 280px;
@@ -171,12 +181,71 @@ main {
 .handResult img {
     height: 240px;
 }
+.buttonArea{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
 
-footer{
+#resetButton {
+    font-weight: 600;
+    border: none;
+    position: relative;
+    display: inline-block;
+    padding: 8px 16px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    border-radius: 0.5rem;
+    background-color: #cab4ee;
+    border-bottom: 5px solid #666196;
+}
+
+#resetButton:hover {
+    margin-top: 3px;
+    background-color: #cab4ee;
+    border-bottom: 2px solid #666196;
+}
+#recordButton {
+    font-weight: 600;
+    border: none;
+    position: relative;
+    display: inline-block;
+    padding: 8px 16px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    border-radius: 0.5rem;
+    background-color: #b4eeb4;
+    border-bottom: 5px solid #619680;
+}
+
+#recordButton:hover {
+    margin-top: 3px;
+    background-color: #b4eeb4;
+    border-bottom: 2px solid #619680;
+}
+footer {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 16px;
-margin: 20px;
-font-size: 12px;
+    margin: 20px;
+    font-size: 12px;
 }
