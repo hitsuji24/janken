@@ -22,6 +22,54 @@ function resetGame() {
     // });
 }
 
+// ＜リーダーボード＞ユーザー名の入力と結果の保存
+// 入力されたユーザー名と現在の所持金でsaveGameResult関数を呼び出し
+function promptForUsernameAndSaveResult(money) {
+    const username = prompt("ゲーム終了！ユーザー名を入力してください:");
+    if (username === null) {
+        // ユーザーがキャンセルを選択した場合の処理
+        return; // 関数を終了
+    }
+    if (username) {
+        saveGameResult(username, money);
+    }
+
+}
+
+//＜リーダーボード＞スコアを保存する関数
+// ユーザーのゲーム結果（ユーザー名、所持金、日時）をオブジェクトとして保存
+// このオブジェクトをJSON形式に変換してlocalStorageに保存
+function saveGameResult(username, money) {
+    const gameResult = {
+        username: username,
+        money: money,
+        date: new Date().toLocaleString()
+    };
+    const resultsJson = localStorage.getItem('gameResults') || '[]';
+    const gameResults = JSON.parse(resultsJson);
+    gameResults.push(gameResult);
+    localStorage.setItem('gameResults', JSON.stringify(gameResults));
+    // リーダーボードの既存の内容をクリア
+    const leaderboard = document.querySelector('#leaderBoardTable tbody');
+    leaderboard.innerHTML = '';
+    // リーダーボードを更新
+    displayLeaderboard(gameResults);
+}
+
+
+// リーダーボードの表示
+function displayLeaderboard(gameResults) {
+    const leaderboard = document.querySelector('#leaderBoardTable tbody');
+    gameResults.forEach(result => {
+        const row = leaderboard.insertRow(-1);
+        row.insertCell(0).textContent = result.username;
+        row.insertCell(1).textContent = result.money;
+        row.insertCell(2).textContent = result.date;
+    });
+}
+
+
+
 
 // DOMがロードされた後、イベントリスナーが設定され、国の選択やじゃんけんの手の選択が可能になる
 document.addEventListener('DOMContentLoaded', function () {
@@ -33,6 +81,13 @@ document.addEventListener('DOMContentLoaded', function () {
     //    リセットボタン
     const resetButton = document.getElementById('resetButton');
     resetButton.addEventListener('click', resetGame);
+
+    //    レコードボタン
+    const recordButton = document.getElementById('recordButton');
+    recordButton.addEventListener('click', () => promptForUsernameAndSaveResult(playerMoney));
+    // playRound内でこれ書いちゃうと、関数が呼び出されるたびに、recordButtonに新しいイベントリスナーが追加されちゃう
+
+
 
     //    初期設定
     let playerMoney = 10000; // プレイヤーの初期所持金
@@ -126,16 +181,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     // 【関数定義】
-    // リーダーボードの表示
-    function displayLeaderboard(gameResults) {
-        const leaderboard = document.querySelector('#leaderBoardTable tbody');
-        gameResults.forEach(result => {
-            const row = leaderboard.insertRow(-1);
-            row.insertCell(0).textContent = result.username;
-            row.insertCell(1).textContent = result.money;
-            row.insertCell(2).textContent = result.date;
-        });
-    }
 
     // 選択された国をハイライト
     function highlightCountry(selectedImg) {
@@ -180,7 +225,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const userHandImg = document.createElement('img');
         const resultImg = document.createElement('img');
         const pcHandImg = document.createElement('img');
-
 
 
 
@@ -257,29 +301,7 @@ document.addEventListener('DOMContentLoaded', function () {
             row.insertCell(3).textContent = playerMoney;
         }
 
-        //＜リーダーボード＞スコアを保存する関数
-        // ユーザーのゲーム結果（ユーザー名、所持金、日時）をオブジェクトとして保存
-        // このオブジェクトをJSON形式に変換してlocalStorageに保存
-        function saveGameResult(username, money) {
-            const gameResult = {
-                username: username,
-                money: money,
-                date: new Date().toLocaleString()
-            };
-            const resultsJson = localStorage.getItem('gameResults') || '[]';
-            const gameResults = JSON.parse(resultsJson);
-            gameResults.push(gameResult);
-            localStorage.setItem('gameResults', JSON.stringify(gameResults));
-        }
 
-        // ＜リーダーボード＞ユーザー名の入力と結果の保存
-        // 入力されたユーザー名と現在の所持金でsaveGameResult関数を呼び出し
-        function promptForUsernameAndSaveResult(money) {
-            const username = prompt("ゲーム終了！ユーザー名を入力してください:");
-            if (username) {
-                saveGameResult(username, money);
-            }
-        }
 
 
         // 【実行】
@@ -303,7 +325,8 @@ document.addEventListener('DOMContentLoaded', function () {
         pcHandImg.src = getHandImage(pcHand, country);
         handResultArea.appendChild(pcHandImg);
 
-        updateMoney(result, country); // 所持金の更新
+        // 所持金の更新
+        updateMoney(result, country);
 
         // スコアボードの更新
         //【備忘録】5回までは実行、それ以降はやらないというif文にすれば6回以降も書き続けちゃうの止まる
@@ -316,15 +339,14 @@ document.addEventListener('DOMContentLoaded', function () {
             alert('次で最後の勝負！');
         }
 
-        if (roundCount >= 5) {
-            // alert('このゲームは終了しました。また遊んでね！');
-            promptForUsernameAndSaveResult(playerMoney);
-            resetButton.style.display = 'block'; // リセットボタンを表示
-            return; // 関数から抜ける
-        }
-
         roundCount++; // ラウンドカウントのインクリメント
 
+        if (roundCount === 5) {
+            // alert('このゲームは終了しました。また遊んでね！');
+            resetButton.style.display = 'block'; // リセットボタンを表示
+            recordButton.style.display = 'block'; // recordボタンを表示
+            return; // 関数から抜ける
+        }
     }
 
     // 【実行】
